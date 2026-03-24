@@ -18,6 +18,6 @@ export class ClaseGrupal {
   @Column('int', { default: 0 })
   cupoActual: number;
 
-  @ManyToOne(() => Staff, (staff) => staff.clases)
+  @ManyToOne(() => Staff, (staff) => staff.clases, { onDelete: 'CASCADE' })
   entrenador: Staff;
 }
