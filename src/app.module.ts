@@ -1,20 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from './database/database.module';
+import { StaffModule } from './staff/staff.module';
+import { ClaseGrupalModule } from './clases-grupales/clase-grupal.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'test',
-      entities: [],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
+    DatabaseModule,
+    StaffModule,
+    ClaseGrupalModule,
   ],
   controllers: [AppController],
   providers: [AppService],
