@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Staff } from '../../staff/entities/staff.entity';
 
-@Entity('group_classes')
+@Entity('clase-grupal')
 export class ClaseGrupal {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,8 +16,8 @@ export class ClaseGrupal {
   cupoMaximo: number;
 
   @Column('int', { default: 0 })
-  cuposOcupados: number;
+  cupoActual: number;
 
-  @ManyToOne(() => Staff)
-  trainer: Staff;
+  @ManyToOne(() => Staff, (staff) => staff.clases)
+  entrenador: Staff;
 }

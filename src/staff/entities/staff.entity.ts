@@ -16,6 +16,6 @@ export class Staff {
   @ManyToOne(() => Specialty, (specialty) => specialty.trainers)
   specialty: Specialty;
 
-  @OneToMany(() => ClaseGrupal, (claseGrupal) => claseGrupal.trainer)
+  @OneToMany(() => ClaseGrupal, (claseGrupal) => claseGrupal.entrenador)
   clases: ClaseGrupal[];
 }

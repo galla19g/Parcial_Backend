@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ClaseGrupal } from './clase-grupal.entity';
+import { ClaseGrupal } from './entities/clase-grupal.entity';
 import { CreateClaseGrupalDto } from './dto/create-clase-grupal.dto';
 import { StaffService } from '../staff/staff.service';
 
