@@ -23,4 +23,4 @@ import { WellnessModule } from './modules/wellness/wellness.module';
     WellnessModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
