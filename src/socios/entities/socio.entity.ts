@@ -1,10 +1,15 @@
-
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('socios')
 export class Socio {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar', length: 100 })
   nombre: string;
@@ -15,7 +20,7 @@ export class Socio {
   @Column({ type: 'varchar', length: 100, unique: true })
   email: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', name: 'fecha_nacimiento' })
   fechaNacimiento: Date;
 
   @Column({
@@ -23,7 +28,7 @@ export class Socio {
     length: 20,
     default: 'activo',
     comment: 'Estado de la membresía: activo, inactivo, suspendido',
+    name: 'estado_membresia',
   })
   estadoMembresia: string;
-
 }

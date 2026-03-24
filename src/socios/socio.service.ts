@@ -1,11 +1,9 @@
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Socio } from './entities/socio.entity';
 import { CreateSocioDto } from './dto/create-socio.dto';
 import { UpdateSocioDto } from './dto/update-socio.dto';
-
 
 @Injectable()
 export class SocioService {
@@ -29,9 +27,7 @@ export class SocioService {
    @returns 
    */
   async findAll(): Promise<Socio[]> {
-    return await this.socioRepository.find({
-      
-    });
+    return await this.socioRepository.find({});
   }
 
   /**
@@ -40,10 +36,9 @@ export class SocioService {
     @returns 
     @throws 
    */
-  async findOne(id: string): Promise<Socio> {
+  async findOne(id: number): Promise<Socio> {
     const socio = await this.socioRepository.findOne({
       where: { id },
-      
     });
     if (!socio) {
       throw new NotFoundException(`Socio con ID "${id}" no encontrado.`);
@@ -57,13 +52,15 @@ export class SocioService {
    @param updateSocioDto
    @returns 
    */
-  async update(id: string, updateSocioDto: UpdateSocioDto): Promise<Socio> {
+  async update(id: number, updateSocioDto: UpdateSocioDto): Promise<Socio> {
     const socio = await this.socioRepository.preload({
       id: id,
       ...updateSocioDto,
     });
     if (!socio) {
-      throw new NotFoundException(`Socio con ID "${id}" no encontrado para actualizar.`);
+      throw new NotFoundException(
+        `Socio con ID "${id}" no encontrado para actualizar.`,
+      );
     }
     return await this.socioRepository.save(socio);
   }
@@ -72,10 +69,12 @@ export class SocioService {
    
     @param id 
    */
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     const result = await this.socioRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Socio con ID "${id}" no encontrado para eliminar.`);
+      throw new NotFoundException(
+        `Socio con ID "${id}" no encontrado para eliminar.`,
+      );
     }
   }
 }
