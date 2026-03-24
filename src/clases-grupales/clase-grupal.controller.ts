@@ -5,7 +5,7 @@ import { UpdateClaseGrupalDto } from './dto/update-clase-grupal.dto';
 
 @Controller('clases-grupales')
 export class ClaseGrupalController {
-  constructor(private readonly claseGrupalService: ClaseGrupalService) {}
+  constructor(private readonly claseGrupalService: ClaseGrupalService) { }
 
   @Post()
   create(@Body() createClaseGrupalDto: CreateClaseGrupalDto) {

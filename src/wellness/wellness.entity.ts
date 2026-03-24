@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('wellness_services')
-export class WellnessService {
+export class WellnessServiceEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

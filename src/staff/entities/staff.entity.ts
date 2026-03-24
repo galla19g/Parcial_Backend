@@ -10,7 +10,7 @@ export class Staff {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @ManyToOne(() => Specialty, (specialty) => specialty.trainers)
