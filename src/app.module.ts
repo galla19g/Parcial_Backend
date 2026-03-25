@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { WellnessModule } from './wellness/wellness.module';
+import { DatabaseModule } from './database/database.module';
+import { StaffModule } from './staff/staff.module';
+import { ClaseGrupalModule } from './clases-grupales/clase-grupal.module';
+import { SocioModule } from './socios/socio.module';
 import { AppController } from './app.controller';
+import { PlanesModule } from './planes/planes.module';
+import { FacturacionModule } from './facturacion/facturacion.module';
 import { AppService } from './app.service';
-
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'test',
-      entities: [],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
     }),
-  ],
+    WellnessModule, DatabaseModule, StaffModule, ClaseGrupalModule, SocioModule, PlanesModule, FacturacionModule], 
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
