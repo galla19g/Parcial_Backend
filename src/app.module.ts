@@ -6,6 +6,8 @@ import { StaffModule } from './staff/staff.module';
 import { ClaseGrupalModule } from './clases-grupales/clase-grupal.module';
 import { SocioModule } from './socios/socio.module';
 import { AppController } from './app.controller';
+import { PlanesModule } from './planes/planes.module';
+import { FacturacionModule } from './facturacion/facturacion.module';
 import { AppService } from './app.service';
 @Module({
   imports: [
@@ -13,7 +15,7 @@ import { AppService } from './app.service';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    WellnessModule, DatabaseModule, StaffModule, ClaseGrupalModule, SocioModule],
+    WellnessModule, DatabaseModule, StaffModule, ClaseGrupalModule, SocioModule, PlanesModule, FacturacionModule], 
   controllers: [AppController],
   providers: [AppService],
 })
