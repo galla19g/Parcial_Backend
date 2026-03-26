@@ -1,6 +1,6 @@
 import {
   Entity, PrimaryGeneratedColumn, Column, ManyToOne,
-  JoinColumn, CreateDateColumn,
+  JoinColumn, CreateDateColumn, BeforeInsert, BeforeUpdate
 } from 'typeorm';
 import { Socio } from '../socios/entities/socio.entity';
 
@@ -29,9 +29,8 @@ export class Facturacion {
     type: 'decimal',
     precision: 10,
     scale: 2,
-    generatedType: 'STORED',
-    asExpression: 'costo_plan + total_servicios',
     name: 'total_pagar',
+    default: 0
   })
   totalPagar: number;
 
@@ -40,4 +39,10 @@ export class Facturacion {
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  calcularTotal() {
+    this.totalPagar = Number(this.costoPlan || 0) + Number(this.totalServicios || 0);
+  }
 }

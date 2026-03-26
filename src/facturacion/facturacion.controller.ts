@@ -1,9 +1,11 @@
 import {
-  Controller, Get, Post, Body, Param, ParseIntPipe, Query,
+  Controller, Get, Post, Body, Param, ParseIntPipe, Query, Patch, Delete
 } from '@nestjs/common';
 import { FacturacionService } from './facturacion.service';
 import { CreateConsumoDto } from './dto/create-consumo.dto';
 import { GenerarFacturaDto } from './dto/generar-factura.dto';
+import { UpdateConsumoDto } from './dto/update-consumo.dto';
+import { UpdateFacturaDto } from './dto/update-factura.dto';
 
 @Controller('facturacion')
 export class FacturacionController {
@@ -33,6 +35,18 @@ export class FacturacionController {
     return this.facturacionService.registrarConsumo(dto);
   }
 
+  /** PATCH /facturacion/consumos/:id */
+  @Patch('consumos/:id')
+  updateConsumo(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateConsumoDto) {
+    return this.facturacionService.updateConsumo(id, dto);
+  }
+
+  /** DELETE /facturacion/consumos/:id */
+  @Delete('consumos/:id')
+  removeConsumo(@Param('id', ParseIntPipe) id: number) {
+    return this.facturacionService.removeConsumo(id);
+  }
+
   /** GET /facturacion/consumos/socio/:socioId */
   @Get('consumos/socio/:socioId')
   getConsumosPorSocio(@Param('socioId', ParseIntPipe) socioId: number) {
@@ -59,6 +73,18 @@ export class FacturacionController {
   @Post('facturas')
   generarFactura(@Body() dto: GenerarFacturaDto) {
     return this.facturacionService.generarFactura(dto);
+  }
+
+  /** PATCH /facturacion/facturas/:id */
+  @Patch('facturas/:id')
+  updateFactura(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateFacturaDto) {
+    return this.facturacionService.updateFactura(id, dto);
+  }
+
+  /** DELETE /facturacion/facturas/:id */
+  @Delete('facturas/:id')
+  removeFactura(@Param('id', ParseIntPipe) id: number) {
+    return this.facturacionService.removeFactura(id);
   }
 
   /** GET /facturacion/facturas */

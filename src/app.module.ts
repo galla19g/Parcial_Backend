@@ -15,7 +15,7 @@ import { AppService } from './app.service';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    WellnessModule, DatabaseModule, StaffModule, ClaseGrupalModule, SocioModule, PlanesModule, FacturacionModule], 
+    WellnessModule, DatabaseModule, StaffModule, ClaseGrupalModule, SocioModule, PlanesModule, FacturacionModule],
   controllers: [AppController],
   providers: [AppService],
 })

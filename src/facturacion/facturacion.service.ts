@@ -9,6 +9,8 @@ import { Socio } from '../socios/entities/socio.entity';
 import { WellnessService } from '../wellness/wellness.entity';
 import { CreateConsumoDto } from './dto/create-consumo.dto';
 import { GenerarFacturaDto } from './dto/generar-factura.dto';
+import { UpdateConsumoDto } from './dto/update-consumo.dto';
+import { UpdateFacturaDto } from './dto/update-factura.dto';
 import { Plan } from '../planes/plan.entity';
 
 @Injectable()
@@ -53,6 +55,34 @@ export class FacturacionService {
       observaciones: dto.observaciones ?? null,
     });
     return this.consumoRepo.save(consumo);
+  }
+
+  async updateConsumo(id: number, dto: UpdateConsumoDto): Promise<ConsumoServicio> {
+    const consumo = await this.consumoRepo.findOne({ where: { id } });
+    if (!consumo) throw new NotFoundException(`Consumo #${id} no encontrado`);
+    
+    if (dto.socioId) {
+      const socio = await this.socioRepo.findOne({ where: { id: dto.socioId } });
+      if (!socio) throw new NotFoundException(`Socio #${dto.socioId} no encontrado`);
+      consumo.socio = socio;
+    }
+    if (dto.servicioId) {
+      const servicio = await this.servicioRepo.findOne({ where: { id: dto.servicioId } });
+      if (!servicio) throw new NotFoundException(`Servicio #${dto.servicioId} no encontrado`);
+      consumo.servicio = servicio;
+      consumo.precioCobrado = servicio.price;
+    }
+    if (dto.fechaConsumo) consumo.fechaConsumo = new Date(dto.fechaConsumo);
+    if (dto.observaciones !== undefined) consumo.observaciones = dto.observaciones;
+    
+    return this.consumoRepo.save(consumo);
+  }
+
+  async removeConsumo(id: number): Promise<{ message: string }> {
+    const consumo = await this.consumoRepo.findOne({ where: { id } });
+    if (!consumo) throw new NotFoundException(`Consumo #${id} no encontrado`);
+    await this.consumoRepo.remove(consumo);
+    return { message: `Consumo #${id} eliminado correctamente` };
   }
 
   getConsumosPorSocio(socioId: number): Promise<ConsumoServicio[]> {
@@ -112,6 +142,28 @@ export class FacturacionService {
       fechaGeneracion: new Date(),
     });
     return this.facturaRepo.save(factura);
+  }
+
+  async updateFactura(id: number, dto: UpdateFacturaDto): Promise<Facturacion> {
+    const factura = await this.facturaRepo.findOne({ where: { id } });
+    if (!factura) throw new NotFoundException(`Factura #${id} no encontrada`);
+
+    if (dto.socioId) {
+      const socio = await this.socioRepo.findOne({ where: { id: dto.socioId } });
+      if (!socio) throw new NotFoundException(`Socio #${dto.socioId} no encontrado`);
+      factura.socio = socio;
+    }
+    if (dto.periodoMes) factura.periodoMes = dto.periodoMes;
+    if (dto.periodoAnio) factura.periodoAnio = dto.periodoAnio;
+
+    return this.facturaRepo.save(factura);
+  }
+
+  async removeFactura(id: number): Promise<{ message: string }> {
+    const factura = await this.facturaRepo.findOne({ where: { id } });
+    if (!factura) throw new NotFoundException(`Factura #${id} no encontrada`);
+    await this.facturaRepo.remove(factura);
+    return { message: `Factura #${id} eliminada correctamente` };
   }
 
   // ── Endpoint principal requerido ─────────────────────────────────────────────

@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Delete,
   Body,
   Param,
@@ -35,6 +36,7 @@ export class WellnessController {
     return this.wellnessService.findOne(id);
   }
 
+  @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateWellnessServiceDto,
