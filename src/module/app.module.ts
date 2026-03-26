@@ -1,0 +1,22 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { WellnessModule } from './wellness/wellness.module';
+import { DatabaseModule } from './database/database.module';
+import { StaffModule } from './staff/staff.module';
+import { ClaseGrupalModule } from './clase_grupal/clase-grupal.module';
+import { SocioModule } from './socios/socio.module';
+import { AppController } from '../controller/app.controller';
+import { PlanesModule } from './planes/planes.module';
+import { FacturacionModule } from './facturacion/facturacion.module';
+import { AppService } from '../service/app.service';
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    WellnessModule, DatabaseModule, StaffModule, ClaseGrupalModule, SocioModule, PlanesModule, FacturacionModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule { }
